@@ -116,6 +116,7 @@ docs = [
     "sphinxcontrib-jquery==4.1", # Handle missing jquery errors
     "jupyter-contrib-nbextensions",
     "lxml<5.0.0", # Needed because the dep above is no longer an active project
+    "sphinx_needs", # sphinx needs are in the repo, but we won't build them in the docs. This is just a safeguard.
 ]
 
 [project.scripts]
