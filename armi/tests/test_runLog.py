@@ -22,6 +22,13 @@ from armi import runLog
 from armi.tests import mockRunLogs
 from armi.utils.directoryChangers import TemporaryDirectoryChanger
 
+# TODO: JOHN
+import warnings
+from numpy import VisibleDeprecationWarning
+
+warnings.filterwarnings("error", category=VisibleDeprecationWarning)
+# TODO: JOHN
+
 
 class TestRunLog(unittest.TestCase):
     def test_setVerbosityFromInteger(self):

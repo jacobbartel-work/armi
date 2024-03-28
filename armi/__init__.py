@@ -101,6 +101,13 @@ _ARMI_CONFIGURE_CONTEXT: Optional[str] = None
 # Advanced flag used in documentation builds to avoid isConfigured guards.
 _ignoreConfigures = False
 
+# TODO: JOHN
+import warnings
+from numpy import VisibleDeprecationWarning
+
+warnings.filterwarnings("error", category=VisibleDeprecationWarning)
+# TODO: JOHN
+
 
 def disableFutureConfigures():
     """Exposed function to ensure armi.configure() isn't called more than once."""

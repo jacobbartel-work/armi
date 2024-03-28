@@ -29,6 +29,13 @@ from armi.tests import TEST_ROOT
 from armi.utils import getPreviousTimeNode
 from armi.utils.directoryChangers import TemporaryDirectoryChanger
 
+# TODO: JOHN
+import warnings
+from numpy import VisibleDeprecationWarning
+
+warnings.filterwarnings("error", category=VisibleDeprecationWarning)
+# TODO: JOHN
+
 # determine if this is a parallel run, and git is installed
 GIT_EXE = None
 if find_executable("git") is not None:

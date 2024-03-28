@@ -32,6 +32,13 @@ from armi.reactor.tests import test_reactors
 from armi.tests import mockRunLogs, TEST_ROOT
 from armi.utils.directoryChangers import TemporaryDirectoryChanger
 
+# TODO: JOHN
+import warnings
+from numpy import VisibleDeprecationWarning
+
+warnings.filterwarnings("error", category=VisibleDeprecationWarning)
+# TODO: JOHN
+
 
 class TestCompareDB3(unittest.TestCase):
     """Tests for the compareDB3 module."""

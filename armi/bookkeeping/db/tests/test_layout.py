@@ -21,6 +21,13 @@ from armi.bookkeeping.db import layout
 from armi.reactor import grids
 from armi.utils.directoryChangers import TemporaryDirectoryChanger
 
+# TODO: JOHN
+import warnings
+from numpy import VisibleDeprecationWarning
+
+warnings.filterwarnings("error", category=VisibleDeprecationWarning)
+# TODO: JOHN
+
 
 class TestLocationPacking(unittest.TestCase):
     """Tests for database location."""

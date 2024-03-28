@@ -35,6 +35,13 @@ from armi.reactor.tests.test_reactors import loadTestReactor, reduceTestReactorR
 from armi.tests import TEST_ROOT
 from armi.utils import directoryChangers
 
+# TODO: JOHN
+import warnings
+from numpy import VisibleDeprecationWarning
+
+warnings.filterwarnings("error", category=VisibleDeprecationWarning)
+# TODO: JOHN
+
 
 def getSimpleDBOperator(cs):
     """
