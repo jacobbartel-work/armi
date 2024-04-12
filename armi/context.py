@@ -107,7 +107,7 @@ MPI_SIZE = 1
 MPI_NODENAME = "local"
 MPI_NODENAMES = ["local"]
 
-
+# TODO: JOHN: This is a test. This is only a test.
 try:
     # Check for MPI
     # The mpi4py module uses cPickle to serialize python objects in preparation for
