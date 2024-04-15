@@ -28,7 +28,7 @@ jobs:
         run: sudo apt-get -y install libopenmpi-dev
       - name: Run Tests and Coverage
         run: |
-          pip install --no-cache-dir pip==22.1
+          pip install --no-cache-dir -U pip
           pip install --no-cache-dir -e .[memprof,mpi,test]
           pytest -n 4 armi
           mpiexec -n 2 --use-hwthread-cpus coverage run --rcfile=.coveragerc -m pytest --cov=armi --cov-config=.coveragerc --cov-report=lcov --cov-append --ignore=venv armi/tests/test_mpiFeatures.py || true
