@@ -271,6 +271,7 @@ class Parameter:
         assert serializer is None or saveToDB
         # TODO: This warning is temporary. At some point, it will become an AssertionError.
         if not len(description):
+            raise AssertionError(f"Param {name} missing Description!")
             runLog.warning(
                 f"DeprecationWarning: Parameter {name} defined without description.",
                 single=True,
