@@ -26,6 +26,7 @@ IGNORED_OBJECTS = [
     "armi/logs/armiRun.mpi.log",
     "armi/tests/tutorials/case-suite/",
     "armi/tests/tutorials/logs/",
+    "logs/",
 ]
 
 
