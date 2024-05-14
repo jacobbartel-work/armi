@@ -140,6 +140,10 @@ class TestDatabaseWriter(unittest.TestCase):
 
     def tearDown(self):
         self.td.__exit__(None, None, None)
+        # sometimes this crumb is being left, let's delete it
+        crumb = os.path.join(PROJECT_ROOT, "armiRun.h5")
+        if os.path.exists(crumb):
+            os.remove(crumb)
 
     def test_writeSystemAttributes(self):
         """Test the writeSystemAttributes method.
@@ -332,6 +336,10 @@ class TestDatabaseReading(unittest.TestCase):
         cls.td.__exit__(None, None, None)
         del cls.r
         cls.r = None
+        # sometimes this crumb is being left, let's delete it
+        crumb = os.path.join(PROJECT_ROOT, "armiRun.h5")
+        if os.path.exists(crumb):
+            os.remove(crumb)
 
     def _fullCoreSizeChecker(self, r):
         self.assertEqual(r.core.numRings, 3)
@@ -538,3 +546,8 @@ class TestStandardFollowOn(unittest.TestCase):
                         firstEndTime, o.r.p.time
                     ),
                 )
+
+        # sometimes this crumb is being left, let's delete it
+        crumb = os.path.join(PROJECT_ROOT, "armiRun.h5")
+        if os.path.exists(crumb):
+            os.remove(crumb)
