@@ -480,6 +480,11 @@ class TestBadName(unittest.TestCase):
             # has the same name as the run to avoid overwriting.
             dbi.initDB()
 
+        # sometimes this crumb is being left, let's delete it
+        crumb = os.path.join(PROJECT_ROOT, "armiRun.h5")
+        if os.path.exists(crumb):
+            os.remove(crumb)
+
 
 class TestStandardFollowOn(unittest.TestCase):
     """Tests related to doing restart runs (loading from DB with Standard operator)."""
