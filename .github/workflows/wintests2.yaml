@@ -1,4 +1,4 @@
-name: ARMI Windows 1 tests
+name: ARMI Windows 2 tests
 
 on:
   push:
