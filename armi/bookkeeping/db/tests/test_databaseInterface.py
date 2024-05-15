@@ -115,6 +115,11 @@ class TestDatabaseInterface(unittest.TestCase):
         self.dbi.interactBOL()
         self.assertIsNotNone(self.dbi._db)
 
+        for _ in range(10):
+            crumb = os.path.join(PROJECT_ROOT, "armiRun.h5")
+            if os.path.exists(crumb):
+                os.remove(crumb)
+
     def test_distributable(self):
         self.assertEqual(self.dbi.distributable(), 4)
         self.dbi.interactDistributeState()
