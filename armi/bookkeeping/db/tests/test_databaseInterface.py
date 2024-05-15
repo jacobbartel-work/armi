@@ -96,10 +96,11 @@ class TestDatabaseInterface(unittest.TestCase):
         # test_interactBOL leaves behind some crumbs that TempDirChanger is not catching
         import time
 
-        time.sleep(1)
+        time.sleep(3)
         crumb = os.path.join(PROJECT_ROOT, "armiRun.h5")
         if os.path.exists(crumb):
             os.remove(crumb)
+        time.sleep(3)
         if os.path.exists("armiRun.h5"):
             os.remove("armiRun.h5")
 
@@ -118,7 +119,9 @@ class TestDatabaseInterface(unittest.TestCase):
         self.dbi.interactBOL()
         self.assertIsNotNone(self.dbi._db)
 
+        import time
         for _ in range(10):
+            time.sleep(1)
             crumb = os.path.join(PROJECT_ROOT, "armiRun.h5")
             if os.path.exists(crumb):
                 os.remove(crumb)
