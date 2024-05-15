@@ -93,8 +93,7 @@ class TestDatabaseInterface(unittest.TestCase):
         self.db.close()
         self.stateRetainer.__exit__()
         self.td.__exit__(None, None, None)
-        # test_interactBOL leaves behind some dirt (accessible after db close) that the
-        # TempDirChanger is not catching
+        # test_interactBOL leaves behind some crumbs that TempDirChanger is not catching
         bolDirt = os.path.join(PROJECT_ROOT, "armiRun.h5")
         if os.path.exists(bolDirt):
             os.remove(bolDirt)

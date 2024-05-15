@@ -1,4 +1,4 @@
-name: ARMI Windows 2 tests
+name: ARMI Windows 1 tests
 
 on:
   push:
@@ -24,6 +24,6 @@ jobs:
       - name: Run Unit Tests on Windows
         run: |
           pip install -e .[memprof,mpi,test]
-          pytest armi/bookkeeping/db/tests/test_layout.py
+        pytest armi/bookkeeping/db/tests/test_databaseInterface.py::TestDatabaseReading
       - name: Find Test Crumbs
         run: python .github/workflows/find_test_crumbs.py
