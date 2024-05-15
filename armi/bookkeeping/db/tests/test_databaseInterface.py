@@ -94,9 +94,11 @@ class TestDatabaseInterface(unittest.TestCase):
         self.stateRetainer.__exit__()
         self.td.__exit__(None, None, None)
         # test_interactBOL leaves behind some crumbs that TempDirChanger is not catching
-        bolDirt = os.path.join(PROJECT_ROOT, "armiRun.h5")
-        if os.path.exists(bolDirt):
-            os.remove(bolDirt)
+        import time
+        time.sleep(1)
+        crumb = os.path.join(PROJECT_ROOT, "armiRun.h5")
+        if os.path.exists(crumb):
+            os.remove(crumb)
 
     def test_interactEveryNodeReturn(self):
         """Test that the DB is NOT written to if cs["tightCoupling"] = True."""
