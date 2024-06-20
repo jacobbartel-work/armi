@@ -423,7 +423,7 @@ def defineSettings() -> List[setting.Setting]:
             CONF_BURNUP_PEAKING_FACTOR,
             default=0.0,
             label="Burn-up Peaking Factor",
-            description="None",
+            description="The peak/average factor for burnup and DPA.",
             schema=vol.All(vol.Coerce(float), vol.Range(min=0)),
         ),
         setting.Setting(
