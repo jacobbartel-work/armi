@@ -1584,6 +1584,9 @@ through the :py:class:`armi.settings.caseSettings.Settings` object, which is typ
 stored in a variable named ``cs``. Interfaces have access to a simulation's settings
 through ``self.cs``.
 
+.. raw:: latex
+
+   \begin{landscape}
 
 .. exec::
     from armi import settings
@@ -1621,3 +1624,7 @@ through ``self.cs``.
     content += '\n'
 
     return content
+
+.. raw:: latex
+
+   \end{landscape}
