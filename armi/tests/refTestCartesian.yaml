@@ -5,7 +5,6 @@ settings:
   burnSteps: 0
   comment: Full-core Cartesian input file with a 10x10 cm square pitch.
   cycleLength: 2000.0
-  epsBurnTime: 0.001
   epsFSAvg: 1e-06
   epsFSPoint: 1e-06
   eqRingSchedule:

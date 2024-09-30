@@ -35,7 +35,6 @@ settings:
   db: false
   detailAssemLocationsBOL:
     - 002-001
-  epsBurnTime: 0.001
   epsFSAvg: 1e-06
   epsFSPoint: 1e-06
   eqRingSchedule:
