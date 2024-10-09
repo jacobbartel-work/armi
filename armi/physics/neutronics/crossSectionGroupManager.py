@@ -850,7 +850,10 @@ class CrossSectionGroupManager(interfaces.Interface):
         self._upperBuGroupBounds = None
         self.representativeBlocks = collections.OrderedDict()
         self.avgNucTemperatures = {}
-        self._buGroupUpdatesEnabled = True
+
+        # this turns off updates for when core changes are made, but dont want to re-evaluate XS
+        # for example if lattice physics was only once per cycle we might not want to re-evaluatee groups
+        self._groupUpdatesEnabled = True
         self._setBuGroupBounds(self.cs["buGroups"])
         self._unrepresentedXSIDs = []
 
@@ -991,9 +994,9 @@ class CrossSectionGroupManager(interfaces.Interface):
         ValueError
             If the provided burnup groups are invalid
         """
-        self._upperBuGroupBounds = upperBuGroupBounds
         lastBu = 0.0
-        for upperBu in self._upperBuGroupBounds:
+        # validate structure  
+        for upperBu in upperBuGroupBounds:
             if upperBu <= 0 or upperBu > 100:
                 raise ValueError(
                     "Burnup group upper bound {0} is invalid".format(upperBu)
@@ -1001,6 +1004,12 @@ class CrossSectionGroupManager(interfaces.Interface):
             if upperBu < lastBu:
                 raise ValueError("Burnup groups must be ascending")
             lastBu = upperBu
+
+        self._upperBuGroupBounds = upperBuGroupBounds
+
+    def _setTempGroupBounds(self, upperBuGroupBounds):
+        #implement here
+        pass
 
     def _updateBurnupGroups(self, blockList):
         """
@@ -1013,7 +1022,13 @@ class CrossSectionGroupManager(interfaces.Interface):
         --------
         armi.reactor.blocks.Block.getMicroSuffix
         """
-        if self._buGroupUpdatesEnabled and len(self._upperBuGroupBounds) > 1:
+        if self._groupUpdatesEnabled:
+            runLog.debug(
+                "Skipping burnup group update of {0} blocks because it is disabled"
+                "".format(len(blockList))
+            )
+
+        if self._groupUpdatesEnabled and len(self._upperBuGroupBounds) > 0:
             runLog.debug("Updating burnup groups of {0} blocks".format(len(blockList)))
             for block in blockList:
                 bu = block.p.percentBu
@@ -1023,11 +1038,34 @@ class CrossSectionGroupManager(interfaces.Interface):
                         break
                 else:
                     raise ValueError("no bu group found for bu={0}".format(bu))
-        else:
+
+
+    def _updateTempGroups(self, blockList):
+        """
+        Update the burnup group of each block based on its burnup.
+
+        If only one burnup group exists, then this is skipped so as to accomodate the possibility
+        of 2-character xsGroup values (useful for detailed V&V models w/o depletion).
+
+        See Also
+        --------
+        armi.reactor.blocks.Block.getMicroSuffix
+        """
+        if self._groupUpdatesEnabled:
             runLog.debug(
                 "Skipping burnup group update of {0} blocks because it is disabled"
                 "".format(len(blockList))
             )
+        if self._groupUpdatesEnabled and len(self._upperTempGroupBounds) > 1:
+            runLog.debug("Updating burnup groups of {0} blocks".format(len(blockList)))
+            for block in blockList:
+                bu = block.p.percentBu
+                for btempGroupIndex, upperTemp in enumerate(self._upperTempGroupBounds):
+                    if bu <= upperBu:
+                        block.p.buGroupNum = buGroupIndex
+                        break
+                else:
+                    raise ValueError("no bu group found for bu={0}".format(bu))
 
     def _addXsGroupsFromBlocks(self, blockCollectionsByXsGroup, blockList):
         """
@@ -1448,7 +1486,7 @@ class CrossSectionGroupManager(interfaces.Interface):
             return self._NON_REPR_GROUP
         return None
 
-    def disableBuGroupUpdates(self):
+    def disableGroupUpdates(self):
         """
         Turn off updating bu groups based on burnup.
 
@@ -1456,23 +1494,23 @@ class CrossSectionGroupManager(interfaces.Interface):
 
         See Also
         --------
-        enableBuGroupUpdates
+        enableGroupUpdates
         """
-        runLog.extra("Burnup group updating disabled")
-        wasEnabled = self._buGroupUpdatesEnabled
-        self._buGroupUpdatesEnabled = False
+        runLog.extra("Cross section group updating disabled")
+        wasEnabled = self._groupUpdatesEnabled
+        self._groupUpdatesEnabled = False
         return wasEnabled
 
-    def enableBuGroupUpdates(self):
+    def enableGroupUpdates(self):
         """
         Turn on updating bu groups based on burnup.
 
         See Also
         --------
-        disableBuGroupUpdates
+        disableGroupUpdates
         """
         runLog.extra("Burnup group updating enabled")
-        self._buGroupUpdatesEnabled = True
+        self._groupUpdatesEnabled = True
 
     def getNucTemperature(self, xsID, nucName):
         """
