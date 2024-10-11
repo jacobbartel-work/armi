@@ -536,19 +536,20 @@ def eleExpandInfoBasedOnCodeENDF(cs):
 
     if "MCNP" in cs[CONF_NEUTRONICS_KERNEL]:
         expansionStrings.update(mcnpExpansions)
-        if int(cs["mcnpLibrary"]) == 50:
-            elementalsToKeep.update(nuclideBases.instances)  # skip expansion
         # ENDF/B VII.0
-        elif 70 <= int(cs["mcnpLibrary"]) <= 79:
+        if cs["mcnpLibraryBaseName"] == "ENDF/B-VII.0":
             elementalsToKeep.update(endf70Elementals)
         # ENDF/B VII.1
-        elif 80 <= int(cs["mcnpLibrary"]) <= 89:
+        elif cs["mcnpLibraryBaseName"] == "ENDF/B-VII.1":
             elementalsToKeep.update(endf71Elementals)
+        # ENDF/B VIII.0
+        elif cs["mcnpLibraryBaseName"] == "ENDF/B-VIII.0":
+            elementalsToKeep.update(endf80Elementals)
         else:
             raise InputError(
                 "Failed to determine nuclides for modeling. "
-                "The `mcnpLibrary` setting value ({}) is not supported.".format(
-                    cs["mcnpLibrary"]
+                "The `mcnpLibraryBaseName` setting value ({}) is not supported.".format(
+                    cs["mcnpLibraryBaseName"]
                 )
             )
 
